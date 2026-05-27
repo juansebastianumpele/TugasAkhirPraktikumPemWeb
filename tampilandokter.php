@@ -1,7 +1,7 @@
 <?php
 include 'koneksi.php';
 
-$data = mysqli_query($conn, "SELECT * FROM dokter");
+$data = mysqli_query($conn, "SELECT * FROM Dokter");
 ?>
 
 <!DOCTYPE html>
@@ -21,18 +21,19 @@ $data = mysqli_query($conn, "SELECT * FROM dokter");
 
         <h2>Data Dokter</h2>
 
-        <a href="tambahdokter.php" class="btn btn-primary mb-3">
-            Tambah Dokter
-        </a>
+        <div class="mb-3">
+            <a href="dashboard_admin.php" class="btn btn-secondary">Kembali</a>
+            <a href="tambahdokter.php" class="btn btn-primary">Tambah Dokter</a>
+        </div>
 
         <table class="table table-bordered">
 
             <tr>
                 <th>No</th>
                 <th>Nama Dokter</th>
-                <th>Spesialis</th>
-                <th>Alamat</th>
+                <th>Spesialisasi</th>
                 <th>No Telp</th>
+                <th>Aksi</th>
             </tr>
 
             <?php
@@ -42,10 +43,13 @@ $data = mysqli_query($conn, "SELECT * FROM dokter");
 
                 <tr>
                     <td><?= $no++; ?></td>
-                    <td><?= $d['nama_dokter']; ?></td>
-                    <td><?= $d['spesialis']; ?></td>
-                    <td><?= $d['alamat']; ?></td>
-                    <td><?= $d['no_telp']; ?></td>
+                    <td><?= $d['nama']; ?></td>
+                    <td><?= $d['spesialisasi']; ?></td>
+                    <td><?= $d['no_telepon']; ?></td>
+                    <td>
+                        <a href="editdokter.php?id=<?= $d['id_dokter']; ?>" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="hapusdokter.php?id=<?= $d['id_dokter']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?');">Hapus</a>
+                    </td>
                 </tr>
 
             <?php } ?>

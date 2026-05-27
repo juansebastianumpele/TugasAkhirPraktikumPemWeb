@@ -2,19 +2,19 @@
 
 include 'koneksi.php';
 
-$dokter = mysqli_query($conn, "SELECT * FROM dokter");
-$pasien = mysqli_query($conn, "SELECT * FROM pasien");
+$dokter = mysqli_query($conn, "SELECT * FROM Dokter");
+$pasien = mysqli_query($conn, "SELECT * FROM Pasien");
 
 if (isset($_POST['submit'])) {
 
-    mysqli_query($conn, "INSERT INTO pelayanan VALUES(
-        '',
-        '$_POST[dokter]',
+    mysqli_query($conn, "INSERT INTO Pelayanan (id_pasien, id_dokter, tanggal_pelayanan, keluhan, diagnosis, tindakan, status) VALUES(
         '$_POST[pasien]',
-        '$_POST[tanggal]',
-        '$_POST[diagnosa]',
+        '$_POST[dokter]',
+        '$_POST[tanggal_pelayanan]',
+        '$_POST[keluhan]',
+        '$_POST[diagnosis]',
         '$_POST[tindakan]',
-        '$_POST[biaya]'
+        '$_POST[status]'
     )");
 
     header("Location:tampilanpelayanan.php");
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
                     <?php while ($d = mysqli_fetch_array($dokter)) { ?>
 
                         <option value="<?= $d['id_dokter']; ?>">
-                            <?= $d['nama_dokter']; ?>
+                            <?= $d['nama']; ?>
                         </option>
 
                     <?php } ?>
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
                     <?php while ($p = mysqli_fetch_array($pasien)) { ?>
 
                         <option value="<?= $p['id_pasien']; ?>">
-                            <?= $p['nama_pasien']; ?>
+                            <?= $p['nama']; ?>
                         </option>
 
                     <?php } ?>
@@ -74,13 +74,18 @@ if (isset($_POST['submit'])) {
             </div>
 
             <div class="mb-3">
-                <label>Tanggal</label>
-                <input type="date" name="tanggal" class="form-control">
+                <label>Tanggal Pelayanan</label>
+                <input type="date" name="tanggal_pelayanan" class="form-control">
             </div>
 
             <div class="mb-3">
-                <label>Diagnosa</label>
-                <textarea name="diagnosa" class="form-control"></textarea>
+                <label>Keluhan</label>
+                <textarea name="keluhan" class="form-control"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label>Diagnosis</label>
+                <textarea name="diagnosis" class="form-control"></textarea>
             </div>
 
             <div class="mb-3">
@@ -89,13 +94,15 @@ if (isset($_POST['submit'])) {
             </div>
 
             <div class="mb-3">
-                <label>Biaya</label>
-                <input type="number" name="biaya" class="form-control">
+                <label>Status</label>
+                <select name="status" class="form-control">
+                    <option value="menunggu">Menunggu</option>
+                    <option value="selesai">Selesai</option>
+                </select>
             </div>
 
-            <button type="submit" name="submit" class="btn btn-danger">
-                Simpan
-            </button>
+            <button type="submit" name="submit" class="btn btn-danger">Simpan</button>
+            <a href="tampilanpelayanan.php" class="btn btn-secondary">Kembali</a>
 
         </form>
 

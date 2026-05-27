@@ -1,7 +1,7 @@
 <?php
 include 'koneksi.php';
 
-$data = mysqli_query($conn, "SELECT * FROM pasien");
+$data = mysqli_query($conn, "SELECT * FROM Pasien");
 ?>
 
 <!DOCTYPE html>
@@ -21,19 +21,21 @@ $data = mysqli_query($conn, "SELECT * FROM pasien");
 
         <h2>Data Pasien</h2>
 
-        <a href="tambahpasien.php" class="btn btn-success mb-3">
-            Tambah Pasien
-        </a>
+        <div class="mb-3">
+            <a href="dashboard_admin.php" class="btn btn-secondary">Kembali</a>
+            <a href="tambahpasien.php" class="btn btn-success">Tambah Pasien</a>
+        </div>
 
         <table class="table table-bordered">
 
             <tr>
                 <th>No</th>
                 <th>Nama</th>
+                <th>Tanggal Lahir</th>
                 <th>JK</th>
-                <th>Umur</th>
                 <th>Alamat</th>
-                <th>Keluhan</th>
+                <th>No Telp</th>
+                <th>Aksi</th>
             </tr>
 
             <?php
@@ -43,11 +45,15 @@ $data = mysqli_query($conn, "SELECT * FROM pasien");
 
                 <tr>
                     <td><?= $no++; ?></td>
-                    <td><?= $p['nama_pasien']; ?></td>
+                    <td><?= $p['nama']; ?></td>
+                    <td><?= $p['tanggal_lahir']; ?></td>
                     <td><?= $p['jenis_kelamin']; ?></td>
-                    <td><?= $p['umur']; ?></td>
                     <td><?= $p['alamat']; ?></td>
-                    <td><?= $p['keluhan']; ?></td>
+                    <td><?= $p['no_telepon']; ?></td>
+                    <td>
+                        <a href="editpasien.php?id=<?= $p['id_pasien']; ?>" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="hapuspasien.php?id=<?= $p['id_pasien']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?');">Hapus</a>
+                    </td>
                 </tr>
 
             <?php } ?>
